@@ -49,7 +49,8 @@ function nathalie_mota_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'nathalie-mota' ),
+			'header' => esc_html__( 'Primary', 'nathalie-mota' ),
+			'footer' => 'Navigation du footer' 
 		)
 	);
 
@@ -140,14 +141,111 @@ add_action( 'widgets_init', 'nathalie_mota_widgets_init' );
 function nathalie_mota_scripts() {
 	wp_enqueue_style( 'nathalie-mota-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'nathalie-mota-style', 'rtl', 'replace' );
+	wp_enqueue_style('theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css'));
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('nathalie-mota-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
+	wp_enqueue_script('theme-scripts', get_stylesheet_directory_uri() . '/js/script.js', array('jquery'), '1.0', true);
+	
 
-	wp_enqueue_script( 'nathalie-mota-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_enqueue_script('jquery');
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'nathalie_mota_scripts' );
+
+function register_my_menu()
+{
+	register_nav_menu('header', "Menu principal");
+}
+add_action('after_setup_theme', 'register_my_menu');
+
+function filtrer_photos()
+{
+	$categorie_id = isset($_POST['categorie']) ? $_POST['categorie'] : '';
+	$format_id = isset($_POST['formats']) ? $_POST['formats'] : '';
+	$order = isset($_POST['order']) ? $_POST['order'] : 'desc';
+	$paged = isset($_POST['page']) ? $_POST['page'] : 1;
+
+	$args = array(
+		'post_type' => 'photo',
+		'posts_per_page' => 8,
+		'orderby' => 'date',
+		'order' => $order,
+		'paged' => $paged,
+	);
+
+	$tax_query = array();
+
+	if (!empty($categorie_id)) {
+		$tax_query[] = array(
+			'taxonomy' => 'categorie',
+			'field' => 'id',
+			'terms' => $categorie_id
+		);
+	}
+
+	if (!empty($formats_id)) {
+		$tax_query[] = array(
+			'taxonomy' => 'Formats',
+			'field' => 'id',
+			'terms' => $formats_id
+		);
+	}
+
+	if (!empty($tax_query)) {
+		$tax_query['relation'] = 'AND';
+		$args['tax_query'] = $tax_query;
+	}
+
+	$query = new WP_Query($args);
+
+	$is_last_page = ($query->max_num_pages <= $paged); // Vérifiez si c'est la dernière page
+
+	if ($query->have_posts()) {
+		while ($query->have_posts()) : $query->the_post();
+			// Le code HTML pour afficher chaque photo
+?>
+			<div class="photo-item">
+				<h3 class="title-photo"><?php the_title(); ?></h3>
+				<?php
+				$categories = get_the_terms(get_the_ID(), 'categorie');
+				$category_name = !empty($categories) ? esc_html($categories[0]->name) : '';
+				if (!empty($category_name)) {
+					echo '<h4 class="categorie-photo">' . $category_name . '</h4>';
+				}
+				?>
+				<?php the_post_thumbnail('large'); // Affiche l'image à la une 
+				?>
+				<a href="<?php the_permalink(); ?>" class="detail-photo-link">
+					<span class="detail-photo"></span>
+				</a>
+				<form>
+					<input type="hidden" name="postid" class="postid" value="<?php the_id(); ?>">
+					<a href="<?php the_post_thumbnail_url('full'); ?>" class="openLightbox" title="Afficher la photo en plein écran" data-fancybox="gallery" data-caption="<?php echo esc_attr(get_the_title()) . (!empty($category_name) ? ' - ' . $category_name : ''); ?>" data-postid="<?php echo get_the_id(); ?>" data-arrow="true">
+					</a>
+				</form>
+			</div>
+<?php
+		endwhile;
+		if ($is_last_page) {
+			// Ajouter un marqueur pour indiquer qu'il n'y a plus de photos à charger
+			echo '<span id="no-more-posts"></span>';
+		}
+	} else {
+		// Ne pas renvoyer de message si aucune photo n'est trouvée pour les requêtes AJAX
+		if ($paged > 1) {
+			echo '';
+		} else {
+			echo 'Aucune photo trouvée.';
+		}
+	}
+
+	wp_reset_postdata();
+
+	die();
+}
 
 /**
  * Implement the Custom Header feature.
@@ -175,4 +273,63 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+function photo_register_post_types()
+{
+
+	// CPT Photo
+	$labels = array(
+		'name' => 'photos',
+		'all_items' => 'Toutes les photos',  // affiché dans le sous menu
+		'singular_name' => 'Photo',
+		'add_new_item' => 'Ajouter une photo',
+		'edit_item' => 'Modifier la photo',
+		'menu_name' => 'Photos'
+	);
+
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'show_in_rest' => true,
+		'has_archive' => true,
+		'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+		'menu_position' => 5,
+		'menu_icon' => 'dashicons-admin-customizer',
+	);
+
+	register_post_type('photo', $args);
+
+	// Déclaration de la premiere Taxonomie
+	$labels = array(
+		'name' => 'Catégories',
+		'singular_name' => 'Catégorie',
+		'new_item_name' => 'Nom de la nouvelle Catégorie',
+	);
+
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'show_in_rest' => true,
+		'hierarchical' => true,
+	);
+
+	register_taxonomy('categorie', 'photo', $args);
+
+	// Déclaration de la deuxième Taxonomie
+	$labels = array(
+		'name' => 'Formats',
+		'singular_name' => 'Formats',
+		'new_item_name' => 'Nom du nouveau Formats',
+	);
+
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'show_in_rest' => true,
+		'hierarchical' => true,
+	);
+
+	register_taxonomy('Formats', 'photo', $args);
+}
+add_action('init', 'photo_register_post_types'); // Le hook init lance la fonction
 
