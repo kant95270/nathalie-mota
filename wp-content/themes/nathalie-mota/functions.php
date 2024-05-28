@@ -145,9 +145,19 @@ function nathalie_mota_scripts() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('nathalie-mota-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 	wp_enqueue_script('theme-scripts', get_stylesheet_directory_uri() . '/js/script.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('ajax-filtrage', get_template_directory_uri() . '/js/ajax-filtrage.js', array('jquery'), null, true);
+	wp_localize_script('ajax-filtrage', 'ajaxurl', admin_url('admin-ajax.php'));
+
+   
+
+
+    wp_enqueue_script('jquery');
+
 	
 
-	wp_enqueue_script('jquery');
+	
+
+	
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -164,7 +174,7 @@ add_action('after_setup_theme', 'register_my_menu');
 function filtrer_photos()
 {
 	$categorie_id = isset($_POST['categorie']) ? $_POST['categorie'] : '';
-	$format_id = isset($_POST['formats']) ? $_POST['formats'] : '';
+	$formats_id = isset($_POST['formats']) ? $_POST['formats'] : '';
 	$order = isset($_POST['order']) ? $_POST['order'] : 'desc';
 	$paged = isset($_POST['page']) ? $_POST['page'] : 1;
 
@@ -246,6 +256,8 @@ function filtrer_photos()
 
 	die();
 }
+add_action('wp_ajax_filtrer_photos', 'filtrer_photos');
+add_action('wp_ajax_nopriv_filtrer_photos', 'filtrer_photos');
 
 /**
  * Implement the Custom Header feature.
