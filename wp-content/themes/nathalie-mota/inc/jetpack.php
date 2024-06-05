@@ -33,7 +33,7 @@ function nathalie_mota_jetpack_setup() {
 		'jetpack-content-options',
 		array(
 			'post-details' => array(
-				'stylesheet' => 'nathalie-mota-style',
+				'stylesheet' => 'nathalie_mota_style',
 				'date'       => '.posted-on',
 				'categories' => '.cat-links',
 				'tags'       => '.tags-links',

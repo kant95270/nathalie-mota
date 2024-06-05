@@ -78,6 +78,7 @@ function closeModale() {
 
 modaleContent.addEventListener('click', closeModale);
 
+
 modaleBox.addEventListener('click', function (e) {
   e.stopPropagation();
 });

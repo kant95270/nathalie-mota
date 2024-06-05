@@ -139,16 +139,15 @@ add_action( 'widgets_init', 'nathalie_mota_widgets_init' );
  * Enqueue scripts and styles.
  */
 function nathalie_mota_scripts() {
-	wp_enqueue_style( 'nathalie-mota-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'nathalie-mota-style', 'rtl', 'replace' );
+	wp_enqueue_style('nathalie_mota-style', get_stylesheet_uri(), array(), _S_VERSION);
+	wp_style_add_data('nathalie_mota-style', 'rtl', 'replace');
 	wp_enqueue_style('theme-style', get_stylesheet_directory_uri() . '/style.css', array(), filemtime(get_stylesheet_directory() . '/style.css'));
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('nathalie-mota-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
+	wp_enqueue_script('nathalie_mota-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 	wp_enqueue_script('theme-scripts', get_stylesheet_directory_uri() . '/js/script.js', array('jquery'), '1.0', true);
-    wp_enqueue_script('ajax-filtrage', get_template_directory_uri() . '/js/ajax-filtrage.js', array('jquery'), null, true);
+	wp_enqueue_script('ajax-filtrage', get_template_directory_uri() . '/js/ajax-filtrage.js', array('jquery'), null, true);
 	wp_localize_script('ajax-filtrage', 'ajaxurl', admin_url('admin-ajax.php'));
-    wp_enqueue_script('lightbox', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), null, true);
-   
+	
 	wp_enqueue_style('fancybox-css', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css');
 
 	wp_enqueue_script('jquery');
@@ -200,7 +199,7 @@ function filtrer_photos()
 
 	if (!empty($formats_id)) {
 		$tax_query[] = array(
-			'taxonomy' => 'Formats',
+			'taxonomy' => 'formats',
 			'field' => 'id',
 			'terms' => $formats_id
 		);

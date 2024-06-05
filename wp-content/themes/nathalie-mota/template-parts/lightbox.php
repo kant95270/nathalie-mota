@@ -20,4 +20,4 @@ $formats = !empty($terms_formats) ? esc_html($terms_formats[0]->name) : 'Inconnu
 <div class="lightbox__info flexrow">
     <p class="photo-category-<?php the_id(); ?>"><?php echo $categorie; ?></p>
     <p class="photo-year-<?php the_id(); ?>"><?php echo the_time('Y'); ?></p>
-</div>
+</div
