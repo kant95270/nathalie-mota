@@ -6824,7 +6824,7 @@ msgstr "Activer"
 msgid "Allow link notifications from other blogs (pingbacks and trackbacks) on new posts"
 msgstr "Autoriser les notifications de lien en provenance d’autres blogs (pings et rétroliens) sur les nouvelles publications"
 
-#: wp-admin/menu-header.php:281 wp-admin/js/common.js:2025
+#: wp-admin/menu-menu-principal.php:281 wp-admin/js/common.js:2025
 msgid "Collapse Main menu"
 msgstr "Replier le menu principal"
 
@@ -8684,7 +8684,7 @@ msgstr[1] "%s millions et +"
 msgid "XML Error: %1$s at line %2$s"
 msgstr "Erreur XML : %1$s à la ligne %2$s"
 
-#: wp-admin/menu-header.php:289
+#: wp-admin/menu-menu-principal.php:289
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -10624,7 +10624,7 @@ msgstr "Le processus de création d’une page reste très proche de celui d’u
 msgid "You can select an image to be shown at the top of your site by uploading from your computer or choosing from your media library. After selecting an image you will be able to crop it."
 msgstr "Vous pouvez choisir une image d’entête personnalisée en la téléversant depuis votre ordinateur ou en la choisissant dans votre médiathèque. Après avoir sélectionné l’image, vous pourrez la recadrer."
 
-#: wp-admin/menu-header.php:290
+#: wp-admin/menu-menu-principal.php:290
 msgid "Skip to main content"
 msgstr "Aller au contenu principal"
 
@@ -12094,7 +12094,7 @@ msgstr "Si vous ne voulez pas téléverser d’image, vous pouvez utiliser l’u
 msgid "You can choose one of your previously uploaded headers, or show a random one."
 msgstr "Vous pouvez choisir un entête parmi ceux que vous avez déjà téléversés, ou en afficher un aléatoirement."
 
-#: wp-admin/menu-header.php:283
+#: wp-admin/menu-menu-principal.php:283
 msgid "Collapse menu"
 msgstr "Réduire le menu"
 

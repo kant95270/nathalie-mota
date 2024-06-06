@@ -265,18 +265,18 @@ input.bulk-select-switcher:focus + .bulk-select-button-label {
 	background: #fff;
 }
 
-#nav-menu-header,
+#nav-menu-menu-principal,
 #nav-menu-footer {
 	padding: 0 10px;
 	background: #f6f7f7;
 }
 
-#nav-menu-header {
+#nav-menu-menu-principal {
 	border-bottom: 1px solid #dcdcde;
 	margin-bottom: 0;
 }
 
-#nav-menu-header .menu-name-label {
+#nav-menu-menu-principal .menu-name-label {
 	display: inline-block;
 	vertical-align: middle;
 	margin-left: 7px;
@@ -923,7 +923,7 @@ body.menu-max-depth-11 { min-width: 1280px !important; }
 		width: 100%;
 	}
 
-	.nav-menus-php #nav-menu-header .major-publishing-actions .publishing-action {
+	.nav-menus-php #nav-menu-menu-principal .major-publishing-actions .publishing-action {
 		padding-top: 1em;
 	}
 

@@ -16090,7 +16090,7 @@ msgctxt "Name for the Text editor tab (formerly HTML)"
 msgid "Text"
 msgstr "Texte"
 
-#: wp-includes/class-wp-admin-bar.php:473 wp-admin/menu-header.php:291
+#: wp-includes/class-wp-admin-bar.php:473 wp-admin/menu-menu-principal.php:291
 msgid "Skip to toolbar"
 msgstr "Aller à la barre d’outils"
 

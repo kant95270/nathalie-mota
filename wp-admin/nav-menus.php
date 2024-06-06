@@ -1087,7 +1087,7 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 					?>
 					<input type="hidden" name="action" value="update" />
 					<input type="hidden" name="menu" id="menu" value="<?php echo esc_attr( $nav_menu_selected_id ); ?>" />
-					<div id="nav-menu-header">
+					<div id="nav-menu-menu-principal">
 						<div class="major-publishing-actions wp-clearfix">
 							<label class="menu-name-label" for="menu-name"><?php _e( 'Menu Name' ); ?></label>
 							<input name="menu-name" id="menu-name" type="text" class="menu-name regular-text menu-item-textbox form-required" required="required" <?php echo $menu_name_val . $menu_name_aria_desc; ?> />
@@ -1095,7 +1095,7 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 								<?php submit_button( empty( $nav_menu_selected_id ) ? __( 'Create Menu' ) : __( 'Save Menu' ), 'primary large menu-save', 'save_menu', false, array( 'id' => 'save_menu_header' ) ); ?>
 							</div><!-- END .publishing-action -->
 						</div><!-- END .major-publishing-actions -->
-					</div><!-- END .nav-menu-header -->
+					</div><!-- END .nav-menu-menu-principal -->
 					<div id="post-body">
 						<div id="post-body-content" class="wp-clearfix">
 							<?php if ( ! $add_new_screen ) : ?>
