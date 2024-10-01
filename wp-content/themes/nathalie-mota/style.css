@@ -1840,10 +1840,13 @@ ul {
   .filter-form {
     flex-direction: column !important; /* Correction ici */
     gap: 10px;
+    
   }
   .filter-container {
     flex-direction: column;
     gap: 10px;
+    align-items: end;
+    padding-right: 255px;
   }
   .photo__others--images {
     flex-direction: column;
@@ -2075,6 +2078,7 @@ ul {
       text-transform: uppercase;
       font-family: poppins;   
     }
+
     
      
      
